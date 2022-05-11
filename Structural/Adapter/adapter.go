@@ -12,8 +12,9 @@ func (a *Adaptee) SendEnergy() int {
 	return toSend
 }
 
+// Target is an interface which our system needs
 type Target interface {
-	SendAllEnergy() string
+	SendAllEnergy()
 	GetEnergy() int
 }
 
@@ -26,9 +27,8 @@ func (a Adapter) GetEnergy() int {
 }
 
 // SendAllEnergy uses existing method from adaptee
-func (a Adapter) SendAllEnergy() string {
+func (a Adapter) SendAllEnergy() {
 	a.SendEnergy()
-	return "Energy sent"
 }
 
 func NewAdapter(adaptee *Adaptee) Target {
@@ -36,9 +36,10 @@ func NewAdapter(adaptee *Adaptee) Target {
 }
 
 func main() {
+	// Adapter makes Adaptee to be able to use Target interface.
 	adapter := NewAdapter(&Adaptee{energyAmount: 10})
 
 	fmt.Println(adapter.GetEnergy())
-	fmt.Println(adapter.SendAllEnergy())
+	adapter.SendAllEnergy()
 	fmt.Println(adapter.GetEnergy())
 }
